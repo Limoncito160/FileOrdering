@@ -91,6 +91,11 @@ public class FileOrdering {
                     String fileName = archive.getName();
                     fileNameList.add(fileName);
 
+                } else if (archive.isDirectory()) {
+
+                    String folderName = archive.getName();
+                    fileNameList.add(folderName + "/");
+
                 }
             }
 
@@ -116,8 +121,13 @@ public class FileOrdering {
 
                 for (int j = 0; j < fileReverseArray[i].length(); j++) {
 
-                    //System.out.print(fileReverseArray[0].charAt(j));
-                    if (fileReverseArray[i].charAt(j) == '.') {
+                    if (fileReverseArray[i].charAt(j) == '/') {
+
+                        fileExtensionArray[i] = "FOLDER";
+                        auxExtension = "";
+                        break;
+
+                    } else if (fileReverseArray[i].charAt(j) == '.') {
 
                         fileRevExtensionArray[i] = auxExtension.toUpperCase();
                         auxExtension = "";
@@ -138,7 +148,13 @@ public class FileOrdering {
                 stringBuilderVariable.append(fileRevExtensionArray[i]);
                 stringBuilderVariable.reverse();
 
-                fileExtensionArray[i] = stringBuilderVariable.toString();
+                if (fileRevExtensionArray[i] == null) {
+                    fileExtensionArray[i] = ".FOLDER";
+                } else {
+
+                    fileExtensionArray[i] = stringBuilderVariable.toString();
+
+                }
 
             }
 
